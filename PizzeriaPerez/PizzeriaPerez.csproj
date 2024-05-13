@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CA44E25D-964E-4B97-8D84-6D4E958112AE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>PizzeriaPerez</RootNamespace>
+    <AssemblyName>PizzeriaPerez</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmComboAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmComboAdmin.Designer.cs">
+      <DependentUpon>frmComboAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCombosPedido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCombosPedido.Designer.cs">
+      <DependentUpon>frmCombosPedido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmComplementosAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmComplementosAdmin.Designer.cs">
+      <DependentUpon>frmComplementosAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmComplementosPedido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmComplementosPedido.Designer.cs">
+      <DependentUpon>frmComplementosPedido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEspecialidadAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEspecialidadAdmin.Designer.cs">
+      <DependentUpon>frmEspecialidadAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmIngredienteExtraAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmIngredienteExtraAdmin.Designer.cs">
+      <DependentUpon>frmIngredienteExtraAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMenuAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMenuAdmin.Designer.cs">
+      <DependentUpon>frmMenuAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMenuPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMenuPrincipal.Designer.cs">
+      <DependentUpon>frmMenuPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPizzaPedido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPizzaPedido.Designer.cs">
+      <DependentUpon>frmPizzaPedido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTamañoAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTamañoAdmin.Designer.cs">
+      <DependentUpon>frmTamañoAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet10.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet10.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet11.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet11.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet12.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet12.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet13.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet13.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet14.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet14.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet15.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet15.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet2.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet3.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet3.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet4.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet4.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet5.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet5.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet6.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet6.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet7.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet7.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet8.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet8.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PizzeriaFDataSet9.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PizzeriaFDataSet9.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmComboAdmin.resx">
+      <DependentUpon>frmComboAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCombosPedido.resx">
+      <DependentUpon>frmCombosPedido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmComplementosAdmin.resx">
+      <DependentUpon>frmComplementosAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmComplementosPedido.resx">
+      <DependentUpon>frmComplementosPedido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEspecialidadAdmin.resx">
+      <DependentUpon>frmEspecialidadAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmIngredienteExtraAdmin.resx">
+      <DependentUpon>frmIngredienteExtraAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMenuAdmin.resx">
+      <DependentUpon>frmMenuAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMenuPrincipal.resx">
+      <DependentUpon>frmMenuPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPizzaPedido.resx">
+      <DependentUpon>frmPizzaPedido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTamañoAdmin.resx">
+      <DependentUpon>frmTamañoAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="PizzeriaFDataSet.xsc">
+      <DependentUpon>PizzeriaFDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet.xss">
+      <DependentUpon>PizzeriaFDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet1.xsc">
+      <DependentUpon>PizzeriaFDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet1.xss">
+      <DependentUpon>PizzeriaFDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet10.xsc">
+      <DependentUpon>PizzeriaFDataSet10.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet10.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet10.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet10.xss">
+      <DependentUpon>PizzeriaFDataSet10.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet11.xsc">
+      <DependentUpon>PizzeriaFDataSet11.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet11.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet11.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet11.xss">
+      <DependentUpon>PizzeriaFDataSet11.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet12.xsc">
+      <DependentUpon>PizzeriaFDataSet12.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet12.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet12.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet12.xss">
+      <DependentUpon>PizzeriaFDataSet12.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet13.xsc">
+      <DependentUpon>PizzeriaFDataSet13.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet13.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet13.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet13.xss">
+      <DependentUpon>PizzeriaFDataSet13.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet14.xsc">
+      <DependentUpon>PizzeriaFDataSet14.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet14.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet14.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet14.xss">
+      <DependentUpon>PizzeriaFDataSet14.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet15.xsc">
+      <DependentUpon>PizzeriaFDataSet15.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet15.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet15.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet15.xss">
+      <DependentUpon>PizzeriaFDataSet15.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet2.xsc">
+      <DependentUpon>PizzeriaFDataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet2.xss">
+      <DependentUpon>PizzeriaFDataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet3.xsc">
+      <DependentUpon>PizzeriaFDataSet3.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet3.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet3.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet3.xss">
+      <DependentUpon>PizzeriaFDataSet3.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet4.xsc">
+      <DependentUpon>PizzeriaFDataSet4.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet4.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet4.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet4.xss">
+      <DependentUpon>PizzeriaFDataSet4.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet5.xsc">
+      <DependentUpon>PizzeriaFDataSet5.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet5.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet5.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet5.xss">
+      <DependentUpon>PizzeriaFDataSet5.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet6.xsc">
+      <DependentUpon>PizzeriaFDataSet6.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet6.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet6.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet6.xss">
+      <DependentUpon>PizzeriaFDataSet6.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet7.xsc">
+      <DependentUpon>PizzeriaFDataSet7.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet7.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet7.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet7.xss">
+      <DependentUpon>PizzeriaFDataSet7.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet8.xsc">
+      <DependentUpon>PizzeriaFDataSet8.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet8.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet8.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet8.xss">
+      <DependentUpon>PizzeriaFDataSet8.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet9.xsc">
+      <DependentUpon>PizzeriaFDataSet9.xsd</DependentUpon>
+    </None>
+    <None Include="PizzeriaFDataSet9.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PizzeriaFDataSet9.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PizzeriaFDataSet9.xss">
+      <DependentUpon>PizzeriaFDataSet9.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pizza Fondo Negro.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LOGO1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\USUARIO.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pizza.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\especialidad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ingredientes extra.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\combo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Complementos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Promo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cerrar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buscar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buscar1.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
