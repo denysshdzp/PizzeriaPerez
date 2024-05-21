@@ -30,6 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.idIngredienteExtraDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombreIngredienteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descripcionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precioIngredienteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iNGREDIENTEEXTRABindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.pizzeriaFDataSet2 = new PizzeriaPerez.PizzeriaFDataSet2();
             this.btnModificar = new System.Windows.Forms.Button();
             this.txtPrecio = new System.Windows.Forms.TextBox();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
@@ -44,18 +50,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.pizzeriaFDataSet2 = new PizzeriaPerez.PizzeriaFDataSet2();
-            this.iNGREDIENTEEXTRABindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.iNGREDIENTEEXTRATableAdapter = new PizzeriaPerez.PizzeriaFDataSet2TableAdapters.INGREDIENTEEXTRATableAdapter();
-            this.idIngredienteExtraDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreIngredienteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descripcionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioIngredienteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnConsultar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pizzeriaFDataSet2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNGREDIENTEEXTRABindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pizzeriaFDataSet2)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -75,6 +75,49 @@
             this.dataGridView1.RowTemplate.Height = 28;
             this.dataGridView1.Size = new System.Drawing.Size(518, 265);
             this.dataGridView1.TabIndex = 60;
+            // 
+            // idIngredienteExtraDataGridViewTextBoxColumn
+            // 
+            this.idIngredienteExtraDataGridViewTextBoxColumn.DataPropertyName = "idIngredienteExtra";
+            this.idIngredienteExtraDataGridViewTextBoxColumn.HeaderText = "idIngredienteExtra";
+            this.idIngredienteExtraDataGridViewTextBoxColumn.MinimumWidth = 8;
+            this.idIngredienteExtraDataGridViewTextBoxColumn.Name = "idIngredienteExtraDataGridViewTextBoxColumn";
+            this.idIngredienteExtraDataGridViewTextBoxColumn.ReadOnly = true;
+            this.idIngredienteExtraDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // nombreIngredienteDataGridViewTextBoxColumn
+            // 
+            this.nombreIngredienteDataGridViewTextBoxColumn.DataPropertyName = "NombreIngrediente";
+            this.nombreIngredienteDataGridViewTextBoxColumn.HeaderText = "NombreIngrediente";
+            this.nombreIngredienteDataGridViewTextBoxColumn.MinimumWidth = 8;
+            this.nombreIngredienteDataGridViewTextBoxColumn.Name = "nombreIngredienteDataGridViewTextBoxColumn";
+            this.nombreIngredienteDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // descripcionDataGridViewTextBoxColumn
+            // 
+            this.descripcionDataGridViewTextBoxColumn.DataPropertyName = "Descripcion";
+            this.descripcionDataGridViewTextBoxColumn.HeaderText = "Descripcion";
+            this.descripcionDataGridViewTextBoxColumn.MinimumWidth = 8;
+            this.descripcionDataGridViewTextBoxColumn.Name = "descripcionDataGridViewTextBoxColumn";
+            this.descripcionDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // precioIngredienteDataGridViewTextBoxColumn
+            // 
+            this.precioIngredienteDataGridViewTextBoxColumn.DataPropertyName = "PrecioIngrediente";
+            this.precioIngredienteDataGridViewTextBoxColumn.HeaderText = "PrecioIngrediente";
+            this.precioIngredienteDataGridViewTextBoxColumn.MinimumWidth = 8;
+            this.precioIngredienteDataGridViewTextBoxColumn.Name = "precioIngredienteDataGridViewTextBoxColumn";
+            this.precioIngredienteDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // iNGREDIENTEEXTRABindingSource
+            // 
+            this.iNGREDIENTEEXTRABindingSource.DataMember = "INGREDIENTEEXTRA";
+            this.iNGREDIENTEEXTRABindingSource.DataSource = this.pizzeriaFDataSet2;
+            // 
+            // pizzeriaFDataSet2
+            // 
+            this.pizzeriaFDataSet2.DataSetName = "PizzeriaFDataSet2";
+            this.pizzeriaFDataSet2.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // btnModificar
             // 
@@ -219,52 +262,9 @@
             this.label1.TabIndex = 47;
             this.label1.Text = "Agregar un nuevo ingrediente:\r\n";
             // 
-            // pizzeriaFDataSet2
-            // 
-            this.pizzeriaFDataSet2.DataSetName = "PizzeriaFDataSet2";
-            this.pizzeriaFDataSet2.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // iNGREDIENTEEXTRABindingSource
-            // 
-            this.iNGREDIENTEEXTRABindingSource.DataMember = "INGREDIENTEEXTRA";
-            this.iNGREDIENTEEXTRABindingSource.DataSource = this.pizzeriaFDataSet2;
-            // 
             // iNGREDIENTEEXTRATableAdapter
             // 
             this.iNGREDIENTEEXTRATableAdapter.ClearBeforeFill = true;
-            // 
-            // idIngredienteExtraDataGridViewTextBoxColumn
-            // 
-            this.idIngredienteExtraDataGridViewTextBoxColumn.DataPropertyName = "idIngredienteExtra";
-            this.idIngredienteExtraDataGridViewTextBoxColumn.HeaderText = "idIngredienteExtra";
-            this.idIngredienteExtraDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.idIngredienteExtraDataGridViewTextBoxColumn.Name = "idIngredienteExtraDataGridViewTextBoxColumn";
-            this.idIngredienteExtraDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idIngredienteExtraDataGridViewTextBoxColumn.Width = 150;
-            // 
-            // nombreIngredienteDataGridViewTextBoxColumn
-            // 
-            this.nombreIngredienteDataGridViewTextBoxColumn.DataPropertyName = "NombreIngrediente";
-            this.nombreIngredienteDataGridViewTextBoxColumn.HeaderText = "NombreIngrediente";
-            this.nombreIngredienteDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.nombreIngredienteDataGridViewTextBoxColumn.Name = "nombreIngredienteDataGridViewTextBoxColumn";
-            this.nombreIngredienteDataGridViewTextBoxColumn.Width = 150;
-            // 
-            // descripcionDataGridViewTextBoxColumn
-            // 
-            this.descripcionDataGridViewTextBoxColumn.DataPropertyName = "Descripcion";
-            this.descripcionDataGridViewTextBoxColumn.HeaderText = "Descripcion";
-            this.descripcionDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.descripcionDataGridViewTextBoxColumn.Name = "descripcionDataGridViewTextBoxColumn";
-            this.descripcionDataGridViewTextBoxColumn.Width = 150;
-            // 
-            // precioIngredienteDataGridViewTextBoxColumn
-            // 
-            this.precioIngredienteDataGridViewTextBoxColumn.DataPropertyName = "PrecioIngrediente";
-            this.precioIngredienteDataGridViewTextBoxColumn.HeaderText = "PrecioIngrediente";
-            this.precioIngredienteDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.precioIngredienteDataGridViewTextBoxColumn.Name = "precioIngredienteDataGridViewTextBoxColumn";
-            this.precioIngredienteDataGridViewTextBoxColumn.Width = 150;
             // 
             // btnConsultar
             // 
@@ -305,11 +305,12 @@
             this.Name = "frmIngredienteExtraAdmin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmIngredienteExtra";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmIngredienteExtraAdmin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pizzeriaFDataSet2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNGREDIENTEEXTRABindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pizzeriaFDataSet2)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

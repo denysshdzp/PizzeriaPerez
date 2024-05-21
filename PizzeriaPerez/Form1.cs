@@ -24,7 +24,7 @@ namespace PizzeriaPerez
 
        
     //Conexion con SQL
-    SqlConnection CONEXION = new SqlConnection("Data Source=LAPTOP-PTEQ4GGC;Initial Catalog=PizzeriaF;Integrated Security=True");
+    SqlConnection CONEXION = new SqlConnection("Data Source=DESKTOP-8RBGU1S;Initial Catalog=PizzeriaF;Integrated Security=True");
 
     frmMenuPrincipal MENU = new frmMenuPrincipal();
 

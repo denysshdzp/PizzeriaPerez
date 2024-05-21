@@ -5,9 +5,9 @@ using System.Windows.Forms;
 
 namespace PizzeriaPerez
 {
-    public partial class frmTamañoAdmin : Form
+    public partial class frmPromocionesAdmin : Form
     {
-        public frmTamañoAdmin()
+        public frmPromocionesAdmin()
         {
             InitializeComponent();
         }
@@ -18,10 +18,12 @@ namespace PizzeriaPerez
         // Método para limpiar
         public void LIMPIAR()
         {
-            txtNombre.Clear();
+            txtCodigo.Clear();
+            txtCantidad.Clear();
             txtDescripcion.Clear();
-            txtPrecio.Clear();
-            txtNombre.Focus();
+            dtFechaInicio.Value = DateTime.Now;
+            dtFechaFin.Value = DateTime.Now;
+            txtCodigo.Focus();
         }
 
         // Llenar la tabla
@@ -29,7 +31,7 @@ namespace PizzeriaPerez
         {
             try
             {
-                SqlDataAdapter DA = new SqlDataAdapter("SP_MOSTRARTAMA", CONEXION);
+                SqlDataAdapter DA = new SqlDataAdapter("SELECT * FROM PROMOCIONES", CONEXION);
                 DataTable DT = new DataTable();
                 DA.Fill(DT);
                 dataGridView1.DataSource = DT;
@@ -51,31 +53,34 @@ namespace PizzeriaPerez
             try
             {
                 CONEXION.Open();
-                SqlCommand ALTAS = new SqlCommand("insert into TAMAÑO(Nombre, Descripcion, Precio) values (@Nombre, @Descripcion, @Precio)", CONEXION);
-                ALTAS.Parameters.AddWithValue("Nombre", txtNombre.Text);
-                ALTAS.Parameters.AddWithValue("Descripcion", txtDescripcion.Text);
-                ALTAS.Parameters.AddWithValue("Precio", txtPrecio.Text);
+                SqlCommand ALTAS = new SqlCommand("INSERT INTO PROMOCIONES(Codigo, Cantidad, Descripcion, FechaInicio, FechaFin) " +
+                    "VALUES (@Codigo, @Cantidad, @Descripcion, @FechaInicio, @FechaFin)", CONEXION);
+                ALTAS.Parameters.AddWithValue("@Codigo", txtCodigo.Text);
+                ALTAS.Parameters.AddWithValue("@Cantidad", txtCantidad.Text);
+                ALTAS.Parameters.AddWithValue("@Descripcion", txtDescripcion.Text);
+                ALTAS.Parameters.AddWithValue("@FechaInicio", dtFechaInicio.Value);
+                ALTAS.Parameters.AddWithValue("@FechaFin", dtFechaFin.Value);
 
-                if (string.IsNullOrWhiteSpace(txtNombre.Text))
+                if (string.IsNullOrWhiteSpace(txtCodigo.Text))
                 {
-                    MessageBox.Show("Llenar el campo Nombre");
-                    txtNombre.Focus();
+                    MessageBox.Show("Llenar el campo Código");
+                    txtCodigo.Focus();
+                }
+                else if (string.IsNullOrWhiteSpace(txtCantidad.Text))
+                {
+                    MessageBox.Show("Llenar el campo de cantidad.");
+                    txtCantidad.Focus();
                 }
                 else if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
                 {
-                    MessageBox.Show("Llenar el campo de descripcion.");
+                    MessageBox.Show("Llenar el campo de descripción.");
                     txtDescripcion.Focus();
-                }
-                else if (string.IsNullOrWhiteSpace(txtPrecio.Text))
-                {
-                    MessageBox.Show("Llenar el campo de precio.");
-                    txtPrecio.Focus();
                 }
                 else
                 {
                     ALTAS.ExecuteNonQuery();
                     LLENAR();
-                    MessageBox.Show("Tamaño dado de alta");
+                    MessageBox.Show("Promoción agregada");
                     LIMPIAR();
                 }
             }
@@ -89,7 +94,7 @@ namespace PizzeriaPerez
             }
         }
 
-        private void frmTamañoAdmin_Load(object sender, EventArgs e)
+        private void frmPromocionesAdmin_Load(object sender, EventArgs e)
         {
             try
             {
@@ -102,17 +107,16 @@ namespace PizzeriaPerez
         }
 
         // Botón para eliminar
-        private void bnEliminar_Click(object sender, EventArgs e)
+        private void btnEliminar_Click(object sender, EventArgs e)
         {
             try
             {
-                string baja = "DELETE FROM TAMAÑO WHERE idTamaño=@idTamaño";
+                string baja = "DELETE FROM PROMOCIONES WHERE idPromocion=@idPromocion";
                 CONEXION.Open();
                 SqlCommand cmdIns = new SqlCommand(baja, CONEXION);
-                cmdIns.Parameters.AddWithValue("idTamaño", txtidTamaño.Text);
+                cmdIns.Parameters.AddWithValue("@idPromocion", Convert.ToInt32(dataGridView1.CurrentRow.Cells["idPromocion"].Value));
                 cmdIns.ExecuteNonQuery();
-                txtidTamaño.Clear();
-                MessageBox.Show("Tamaño eliminado");
+                MessageBox.Show("Promoción eliminada");
                 LLENAR();
                 LIMPIAR();
             }
@@ -131,22 +135,26 @@ namespace PizzeriaPerez
         {
             try
             {
+                int idPromocion = Convert.ToInt32(dataGridView1.CurrentRow.Cells["idPromocion"].Value);
                 CONEXION.Open();
-                string Consulta = "select * from TAMAÑO where idTamaño =" + txtidTamaño.Text;
+                string Consulta = "SELECT * FROM PROMOCIONES WHERE idPromocion=@idPromocion";
                 SqlCommand cmdConsulta = new SqlCommand(Consulta, CONEXION);
-                SqlDataReader Reade = cmdConsulta.ExecuteReader();
-                if (Reade.Read())
+                cmdConsulta.Parameters.AddWithValue("@idPromocion", idPromocion);
+                SqlDataReader Reader = cmdConsulta.ExecuteReader();
+                if (Reader.Read())
                 {
-                    txtNombre.Text = Reade.GetValue(1).ToString();
-                    txtDescripcion.Text = Reade.GetValue(2).ToString();
-                    txtPrecio.Text = Reade.GetValue(3).ToString();
+                    txtCodigo.Text = Reader["Codigo"].ToString();
+                    txtCantidad.Text = Reader["Cantidad"].ToString();
+                    txtDescripcion.Text = Reader["Descripcion"].ToString();
+                    dtFechaInicio.Value = Convert.ToDateTime(Reader["FechaInicio"]);
+                    dtFechaFin.Value = Convert.ToDateTime(Reader["FechaFin"]);
                 }
                 else
                 {
                     MessageBox.Show("Id no encontrado, intente de nuevo");
                     LIMPIAR();
                 }
-                Reade.Close();
+                Reader.Close();
             }
             catch (Exception ex)
             {
@@ -163,15 +171,18 @@ namespace PizzeriaPerez
         {
             try
             {
-                SqlCommand Actualizar = new SqlCommand("UPDATE TAMAÑO SET Nombre=@Nombre, Descripcion=@Descripcion, Precio=@Precio WHERE idTamaño=@idTamaño", CONEXION);
-                Actualizar.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+                int idPromocion = Convert.ToInt32(dataGridView1.CurrentRow.Cells["idPromocion"].Value);
+                SqlCommand Actualizar = new SqlCommand("UPDATE PROMOCIONES SET Codigo=@Codigo, Cantidad=@Cantidad, Descripcion=@Descripcion, FechaInicio=@FechaInicio, FechaFin=@FechaFin WHERE idPromocion=@idPromocion", CONEXION);
+                Actualizar.Parameters.AddWithValue("@Codigo", txtCodigo.Text);
+                Actualizar.Parameters.AddWithValue("@Cantidad", txtCantidad.Text);
                 Actualizar.Parameters.AddWithValue("@Descripcion", txtDescripcion.Text);
-                Actualizar.Parameters.AddWithValue("@Precio", txtPrecio.Text);
-                Actualizar.Parameters.AddWithValue("@idTamaño", txtidTamaño.Text);
+                Actualizar.Parameters.AddWithValue("@FechaInicio", dtFechaInicio.Value);
+                Actualizar.Parameters.AddWithValue("@FechaFin", dtFechaFin.Value);
+                Actualizar.Parameters.AddWithValue("@idPromocion", idPromocion);
 
                 CONEXION.Open();
                 Actualizar.ExecuteNonQuery();
-                MessageBox.Show("Tamaño Modificado.");
+                MessageBox.Show("Promoción modificada.");
                 LLENAR();
                 LIMPIAR();
             }
@@ -186,4 +197,3 @@ namespace PizzeriaPerez
         }
     }
 }
-

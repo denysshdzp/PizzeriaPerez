@@ -1,94 +1,117 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-//Llamar la libreria SQL
-using System.Data.SqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PizzeriaPerez
 {
     public partial class frmCombosPedido : Form
     {
+        SqlConnection CONEXION = new SqlConnection("Data Source=DESKTOP-8RBGU1S;Initial Catalog=PizzeriaF;Integrated Security=True");
+
         public frmCombosPedido()
         {
             InitializeComponent();
         }
 
-        private void frmCombosPedido_Load(object sender, EventArgs e)
+        public void LimpiarDatos()
         {
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet11.SPObtenerDetallesCombo' Puede moverla o quitarla según sea necesario.
-            this.sPObtenerDetallesComboTableAdapter1.Fill(this.pizzeriaFDataSet11.SPObtenerDetallesCombo);
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet10.SPObtenerDetalleCombo' Puede moverla o quitarla según sea necesario.
-            //this.sPObtenerDetalleComboTableAdapter.Fill(this.pizzeriaFDataSet10.SPObtenerDetalleCombo);
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet9.SPObtenerDetallesCombo' Puede moverla o quitarla según sea necesario.
-            this.sPObtenerDetallesComboTableAdapter.Fill(this.pizzeriaFDataSet9.SPObtenerDetallesCombo);
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet3.INGREDIENTEEXTRA' Puede moverla o quitarla según sea necesario.
-            this.iNGREDIENTEEXTRATableAdapter.Fill(this.pizzeriaFDataSet3.INGREDIENTEEXTRA);
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet8.COMBO' Puede moverla o quitarla según sea necesario.
-            this.cOMBOTableAdapter.Fill(this.pizzeriaFDataSet8.COMBO);
-
-        }
-        //Conexion con SQL
-        SqlConnection CONEXION = new SqlConnection("Data Source=LAPTOP-PTEQ4GGC;Initial Catalog=PizzeriaF;Integrated Security=True");
-
-        //Metodo para limpiar
-        public void LIMPIAR()
-        {
-            txtCantidadExtra.Clear();
             txtComentarios.Clear();
-
+            txtCantidadExtra.Clear(); // Limpiar el TextBox de cantidad
         }
 
-        //Llenar la tabla
         public void LLENAR()
         {
+            try
+            {
+                SqlDataAdapter DA = new SqlDataAdapter("SPObtenerDetallesCombo", CONEXION);
+                DataTable DT = new DataTable();
+                DA.Fill(DT);
+                dataGridView1.DataSource = DT;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los detalles de combo: " + ex.Message);
+            }
+        }
 
-            SqlDataAdapter DA = new SqlDataAdapter("SPObtenerDetallesCombo", CONEXION);
-            DataTable DT = new DataTable();
-            DA.Fill(DT);
-            dataGridView1.DataSource = DT;
+        private void frmCombosPedido_Load(object sender, EventArgs e)
+        {
+            LLENAR(); // Llenar el DataGridView al cargar el formulario
+            CargarComboBoxes(); // Llenar los ComboBoxes al cargar el formulario
+        }
+
+        private void CargarComboBoxes()
+        {
+            try
+            {
+                // Llenar el ComboBox de Combo
+                SqlDataAdapter comboAdapter = new SqlDataAdapter("SELECT * FROM COMBO", CONEXION);
+                DataTable comboDataTable = new DataTable();
+                comboAdapter.Fill(comboDataTable);
+                cbCombo.DataSource = comboDataTable;
+                cbCombo.DisplayMember = "NombreCombo";
+                cbCombo.ValueMember = "idCombo";
+
+                // Llenar el ComboBox de Ingrediente Extra
+                SqlDataAdapter extraAdapter = new SqlDataAdapter("SELECT * FROM INGREDIENTEEXTRA", CONEXION);
+                DataTable extraDataTable = new DataTable();
+                extraAdapter.Fill(extraDataTable);
+                cbExtra.DataSource = extraDataTable;
+                cbExtra.DisplayMember = "NombreIngrediente";
+                cbExtra.ValueMember = "idIngredienteExtra";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los ComboBoxes: " + ex.Message);
+            }
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            CONEXION.Open();
-            SqlCommand ALTAS = new SqlCommand("insert into COMBOPEDIDO(idCombo,Comentarios,idIngredienteExtra,CantidadExtra)" +
-               "values (@idCombo,@Comentarios,@idIngredienteExtra,@CantidadExtra)", CONEXION);
-
-            // Obtener el ID del tamaño seleccionado
-            int idComboPedido= (int)cbCombo.SelectedValue;
-
-            // Obtener el ID del ingrediente extra seleccionado
-            int idIngredienteExtraSeleccionado = (int)cbExtra.SelectedValue;
-
-            // Luego puedes utilizar estos IDs en lugar de los valores de los ComboBoxes en tus parámetros SQL
-            ALTAS.Parameters.AddWithValue("idCombo", idComboPedido);
-            ALTAS.Parameters.AddWithValue("Comentarios", txtComentarios.Text);
-            ALTAS.Parameters.AddWithValue("idIngredienteExtra", idIngredienteExtraSeleccionado);
-            ALTAS.Parameters.AddWithValue("CantidadExtra", txtCantidadExtra.Text);
-
-
             try
             {
+                CONEXION.Open();
+                SqlCommand ALTAS = new SqlCommand("INSERT INTO COMBOPEDIDO(idCombo, idIngredienteExtra, Comentarios, CantidadExtra) " +
+                   "VALUES (@idCombo, @idIngredienteExtra, @Comentarios, @CantidadExtra)", CONEXION);
+
+                int idComboSeleccionado = (int)cbCombo.SelectedValue;
+                int idIngredienteExtraSeleccionado = (int)cbExtra.SelectedValue;
+
+                ALTAS.Parameters.AddWithValue("@idCombo", idComboSeleccionado);
+                ALTAS.Parameters.AddWithValue("@idIngredienteExtra", idIngredienteExtraSeleccionado);
+                ALTAS.Parameters.AddWithValue("@Comentarios", txtComentarios.Text);
+                ALTAS.Parameters.AddWithValue("@CantidadExtra", txtCantidadExtra.Text);
 
                 ALTAS.ExecuteNonQuery();
+                MessageBox.Show("COMBO AGREGADO AL PEDIDO");
+                LimpiarDatos();
                 LLENAR();
-                MessageBox.Show("COMBO AGREGADA AL PEDIDO");
-                LIMPIAR();
 
+                // Llamar al procedimiento almacenado para llenar la tabla PEDIDO_FINAL
+                SqlCommand llenarPedidoFinal = new SqlCommand("SP_LLENAR_PEDIDO_FINAL", CONEXION);
+                llenarPedidoFinal.CommandType = CommandType.StoredProcedure;
+                llenarPedidoFinal.ExecuteNonQuery();
+
+                MessageBox.Show("Pedido Final actualizado.");
+
+                // Actualizar el ListBox en el formulario principal
+                if (Application.OpenForms["frmMenuPrincipal"] is frmMenuPrincipal menuPrincipal)
+                {
+                    menuPrincipal.CargarDatosPedidoFinal();
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("ERROR DE REGISTRO");
+                MessageBox.Show("ERROR DE REGISTRO: " + ex.Message);
             }
-            CONEXION.Close();
+            finally
+            {
+                CONEXION.Close();
+            }
         }
     }
 }
+
+
+

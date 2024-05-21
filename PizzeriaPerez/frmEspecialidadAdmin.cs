@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-//Llamar la libreria SQL
-using System.Data.SqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-
 
 namespace PizzeriaPerez
 {
@@ -29,162 +19,167 @@ namespace PizzeriaPerez
 
         private void frmEspecialidadAdmin_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet1.ESPECIALIDAD' Puede moverla o quitarla según sea necesario.
-            this.eSPECIALIDADTableAdapter.Fill(this.pizzeriaFDataSet1.ESPECIALIDAD);
-
+            try
+            {
+                LLENAR();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los datos: " + ex.Message);
+            }
         }
-        //Conexion con SQL
-        SqlConnection CONEXION = new SqlConnection("Data Source=LAPTOP-PTEQ4GGC;Initial Catalog=PizzeriaF;Integrated Security=True");
 
-        //Metodo para limpiar
+        // Conexión con SQL
+        SqlConnection CONEXION = new SqlConnection("Data Source=DESKTOP-8RBGU1S;Initial Catalog=PizzeriaF;Integrated Security=True");
+
+        // Método para limpiar
         public void LIMPIAR()
         {
             txtNombre.Clear();
             txtDescripcion.Clear();
             txtPrecioExtra.Clear();
             txtNombre.Focus();
-
         }
 
-        //Llenar la tabla
+        // Llenar la tabla
         public void LLENAR()
         {
-
-            SqlDataAdapter DA = new SqlDataAdapter("SP_MOSTRARESP", CONEXION);
-            DataTable DT = new DataTable();
-            DA.Fill(DT);
-            dataGridView1.DataSource = DT;
+            try
+            {
+                SqlDataAdapter DA = new SqlDataAdapter("SP_MOSTRARESP", CONEXION);
+                DataTable DT = new DataTable();
+                DA.Fill(DT);
+                dataGridView1.DataSource = DT;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al llenar la tabla: " + ex.Message);
+            }
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            //Empieza la conexion
-            CONEXION.Open();
-            //Se ponen los parametros de la tabla ESPECIALIDAD que seran alimentados a traves de los txt
-            SqlCommand ALTAS = new SqlCommand("insert into ESPECIALIDAD(Nombre,Descripcion,CostoExtra)" +
-               "values (@Nombre,@Descripcion,@CostoExtra)", CONEXION);
-
-
-            //Se manda la informacion a la tabla
-            ALTAS.Parameters.AddWithValue("Nombre", txtNombre.Text);
-            ALTAS.Parameters.AddWithValue("Descripcion", txtDescripcion.Text);
-            ALTAS.Parameters.AddWithValue("CostoExtra", txtPrecioExtra.Text);
-
-            //Excepciones
             try
             {
-                if (txtNombre.Text == "")
+                CONEXION.Open();
+                SqlCommand ALTAS = new SqlCommand("insert into ESPECIALIDAD(Nombre,Descripcion,CostoExtra) values (@Nombre,@Descripcion,@CostoExtra)", CONEXION);
+                ALTAS.Parameters.AddWithValue("Nombre", txtNombre.Text);
+                ALTAS.Parameters.AddWithValue("Descripcion", txtDescripcion.Text);
+                ALTAS.Parameters.AddWithValue("CostoExtra", txtPrecioExtra.Text);
+
+                if (string.IsNullOrWhiteSpace(txtNombre.Text))
                 {
                     MessageBox.Show("Llenar el campo Nombre");
                     txtNombre.Focus();
                 }
-                else if (txtDescripcion.Text == "")
+                else if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
                 {
-                    MessageBox.Show("Llenar el campo de descripcion.");
-
+                    MessageBox.Show("Llenar el campo de Descripción");
                     txtDescripcion.Focus();
                 }
-                else if (txtPrecioExtra.Text == null)
+                else if (string.IsNullOrWhiteSpace(txtPrecioExtra.Text))
                 {
-                    MessageBox.Show("Llenar el campo de precio.");
+                    MessageBox.Show("Llenar el campo de Precio Extra");
                     txtPrecioExtra.Focus();
                 }
                 else
                 {
                     ALTAS.ExecuteNonQuery();
                     LLENAR();
-                    MessageBox.Show("Especialidad dado de alta");
+                    MessageBox.Show("Especialidad dada de alta");
                     LIMPIAR();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("ERROR DE REGISTRO");
+                MessageBox.Show("Error de registro: " + ex.Message);
             }
-
-            CONEXION.Close();
+            finally
+            {
+                CONEXION.Close();
+            }
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            string baja = "DELETE FROM ESPECIALIDAD WHERE idEspecialidad=@idEspecialidad";
-            CONEXION.Open();
-
-
-            SqlCommand cmdIns = new SqlCommand(baja, CONEXION);
-            cmdIns.Parameters.Add("idEspecialidad", txtIdEspecialidad.Text);
-            cmdIns.ExecuteNonQuery();
-
-            cmdIns.Dispose();
-            cmdIns = null;
-            txtIdEspecialidad.Clear();
-
-            CONEXION.Close();
-            MessageBox.Show("Especialidad eliminada");
-            // limpiar los textbox
-            LLENAR();
-            LIMPIAR();
+            try
+            {
+                string baja = "DELETE FROM ESPECIALIDAD WHERE idEspecialidad=@idEspecialidad";
+                CONEXION.Open();
+                SqlCommand cmdIns = new SqlCommand(baja, CONEXION);
+                cmdIns.Parameters.AddWithValue("idEspecialidad", txtIdEspecialidad.Text);
+                cmdIns.ExecuteNonQuery();
+                MessageBox.Show("Especialidad eliminada");
+                LLENAR();
+                LIMPIAR();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al eliminar: " + ex.Message);
+            }
+            finally
+            {
+                CONEXION.Close();
+            }
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            //Comando actualizar atraves de un ID ya existente
-            SqlCommand Actualizar = new SqlCommand("UPDATE ESPECIALIDAD SET Nombre=@Nombre, Descripcion=@Descripcion, CostoExtra=@CostoExtra WHERE idEspecialidad=@idEspecialidad", CONEXION);
+            try
+            {
+                SqlCommand Actualizar = new SqlCommand("UPDATE ESPECIALIDAD SET Nombre=@Nombre, Descripcion=@Descripcion, CostoExtra=@CostoExtra WHERE idEspecialidad=@idEspecialidad", CONEXION);
+                Actualizar.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+                Actualizar.Parameters.AddWithValue("@Descripcion", txtDescripcion.Text);
+                Actualizar.Parameters.AddWithValue("@CostoExtra", txtPrecioExtra.Text);
+                Actualizar.Parameters.AddWithValue("@idEspecialidad", txtIdEspecialidad.Text);
 
-            // Actualizar parametros en el DataGridView
-            Actualizar.Parameters.AddWithValue("@Nombre", txtNombre.Text);
-            Actualizar.Parameters.AddWithValue("@Descripcion", txtDescripcion.Text);
-            Actualizar.Parameters.AddWithValue("@CostoExtra", txtPrecioExtra.Text);
-            Actualizar.Parameters.AddWithValue("@idEspecialidad", txtIdEspecialidad.Text);
-
-            CONEXION.Open(); // Abrir la conexión
-
-            Actualizar.ExecuteNonQuery(); // Ejecutar la consulta
-
-            CONEXION.Close(); // Cerrar la conexión
-
-            MessageBox.Show("Especialidad Modificada.");
-
-            // Limpiar los textbox
-            LLENAR();
-            LIMPIAR();
-
+                CONEXION.Open();
+                Actualizar.ExecuteNonQuery();
+                MessageBox.Show("Especialidad modificada");
+                LLENAR();
+                LIMPIAR();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al modificar: " + ex.Message);
+            }
+            finally
+            {
+                CONEXION.Close();
+            }
         }
 
         private void btnConsultar_Click(object sender, EventArgs e)
         {
-            //Conexion abierta
-            CONEXION.Open();
-            LLENAR();
-
-            //Consultar atraves del ID de la tabla
-            String Consulta = "select * from ESPECIALIDAD where idEspecialidad =" + txtIdEspecialidad.Text;
-            SqlCommand cmdConsulta = new SqlCommand(Consulta, CONEXION);
-
-            //Excepciones
             try
             {
-                SqlCommand Consultar = CONEXION.CreateCommand();
-                Consultar.CommandText = "select * from ESPECIALIDAD where idEspecialidad =" + txtIdEspecialidad.Text;
-                Consultar.ExecuteNonQuery();
+                CONEXION.Open();
+                string consulta = "SELECT * FROM ESPECIALIDAD WHERE idEspecialidad=@idEspecialidad";
+                SqlCommand cmdConsulta = new SqlCommand(consulta, CONEXION);
+                cmdConsulta.Parameters.AddWithValue("@idEspecialidad", txtIdEspecialidad.Text);
 
-                LLENAR();
-
-
-                SqlDataReader Reade = cmdConsulta.ExecuteReader();
-                Reade.Read();
-                txtNombre.Text = Reade.GetValue(1).ToString();
-                txtDescripcion.Text = Reade.GetValue(2).ToString();
-                txtPrecioExtra.Text = Reade.GetValue(3).ToString();
+                SqlDataReader reader = cmdConsulta.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtNombre.Text = reader["Nombre"].ToString();
+                    txtDescripcion.Text = reader["Descripcion"].ToString();
+                    txtPrecioExtra.Text = reader["CostoExtra"].ToString();
+                }
+                else
+                {
+                    MessageBox.Show("ID no encontrado, intente de nuevo");
+                    LIMPIAR();
+                }
+                reader.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Id no encontrado, intente de nuevo");
-
-                // limpiar los textbox
-                LIMPIAR();
+                MessageBox.Show("Error al consultar: " + ex.Message);
             }
-            CONEXION.Close();
+            finally
+            {
+                CONEXION.Close();
+            }
         }
     }
 }

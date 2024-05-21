@@ -56,5 +56,13 @@ namespace PizzeriaPerez
             //Mostrarla
             comple.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //Llamado a la forma de promociones
+            frmPromocionesAdmin prom = new frmPromocionesAdmin();
+            //Mostrarla
+            prom.Show();
+        }
     }
 }

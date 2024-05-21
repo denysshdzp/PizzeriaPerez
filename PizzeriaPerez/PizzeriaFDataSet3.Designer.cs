@@ -4398,15 +4398,6 @@ SELECT idTamaño, Nombre, Descripcion, Precio FROM TAMAÑO WHERE (idTamaño = @i
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateUpdatedRows(PizzeriaFDataSet3 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._cOMBOTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.COMBO.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._cOMBOTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._cOMPLEMENTOSTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.COMPLEMENTOS.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -4443,6 +4434,15 @@ SELECT idTamaño, Nombre, Descripcion, Precio FROM TAMAÑO WHERE (idTamaño = @i
                     allChangedRows.AddRange(updatedRows);
                 }
             }
+            if ((this._cOMBOTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.COMBO.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._cOMBOTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             return result;
         }
         
@@ -4453,14 +4453,6 @@ SELECT idTamaño, Nombre, Descripcion, Precio FROM TAMAÑO WHERE (idTamaño = @i
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateInsertedRows(PizzeriaFDataSet3 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._cOMBOTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.COMBO.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._cOMBOTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._cOMPLEMENTOSTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.COMPLEMENTOS.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -4493,6 +4485,14 @@ SELECT idTamaño, Nombre, Descripcion, Precio FROM TAMAÑO WHERE (idTamaño = @i
                     allAddedRows.AddRange(addedRows);
                 }
             }
+            if ((this._cOMBOTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.COMBO.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._cOMBOTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
             return result;
         }
         
@@ -4503,6 +4503,14 @@ SELECT idTamaño, Nombre, Descripcion, Precio FROM TAMAÑO WHERE (idTamaño = @i
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateDeletedRows(PizzeriaFDataSet3 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
+            if ((this._cOMBOTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.COMBO.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._cOMBOTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
             if ((this._tAMAÑOTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.TAMAÑO.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -4532,14 +4540,6 @@ SELECT idTamaño, Nombre, Descripcion, Precio FROM TAMAÑO WHERE (idTamaño = @i
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._cOMPLEMENTOSTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._cOMBOTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.COMBO.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._cOMBOTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }

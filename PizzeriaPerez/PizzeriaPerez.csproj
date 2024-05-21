@@ -82,6 +82,12 @@
     <Compile Include="frmEspecialidadAdmin.Designer.cs">
       <DependentUpon>frmEspecialidadAdmin.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmFormaDePago.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFormaDePago.Designer.cs">
+      <DependentUpon>frmFormaDePago.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmIngredienteExtraAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,11 +112,29 @@
     <Compile Include="frmPizzaPedido.Designer.cs">
       <DependentUpon>frmPizzaPedido.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPromocionesAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPromocionesAdmin.Designer.cs">
+      <DependentUpon>frmPromocionesAdmin.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmTamañoAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmTamañoAdmin.Designer.cs">
       <DependentUpon>frmTamañoAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTarjeta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTarjeta.Designer.cs">
+      <DependentUpon>frmTarjeta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTicket.Designer.cs">
+      <DependentUpon>frmTicket.cs</DependentUpon>
     </Compile>
     <Compile Include="PizzeriaFDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -212,6 +236,9 @@
     <EmbeddedResource Include="frmEspecialidadAdmin.resx">
       <DependentUpon>frmEspecialidadAdmin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmFormaDePago.resx">
+      <DependentUpon>frmFormaDePago.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmIngredienteExtraAdmin.resx">
       <DependentUpon>frmIngredienteExtraAdmin.cs</DependentUpon>
     </EmbeddedResource>
@@ -224,8 +251,17 @@
     <EmbeddedResource Include="frmPizzaPedido.resx">
       <DependentUpon>frmPizzaPedido.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmPromocionesAdmin.resx">
+      <DependentUpon>frmPromocionesAdmin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmTamañoAdmin.resx">
       <DependentUpon>frmTamañoAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTarjeta.resx">
+      <DependentUpon>frmTarjeta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTicket.resx">
+      <DependentUpon>frmTicket.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

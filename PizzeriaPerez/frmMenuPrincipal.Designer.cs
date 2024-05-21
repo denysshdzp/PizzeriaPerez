@@ -50,7 +50,19 @@
             this.pizzeriaFDataSet15BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pizzeriaFDataSet15 = new PizzeriaPerez.PizzeriaFDataSet15();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.lblTotal = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblSubtotal = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnAplicar = new System.Windows.Forms.Button();
+            this.txtCodigoPromocion = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtNombreCliente = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnPagar = new System.Windows.Forms.Button();
+            this.listBoxPedidoFinal = new System.Windows.Forms.ListBox();
+            this.listViewPedidoFinal = new System.Windows.Forms.ListView();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -58,7 +70,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pizzeriaFDataSet15BindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pizzeriaFDataSet15)).BeginInit();
             this.panel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -269,7 +280,6 @@
             this.pContenido.Name = "pContenido";
             this.pContenido.Size = new System.Drawing.Size(930, 757);
             this.pContenido.TabIndex = 2;
-            this.pContenido.Paint += new System.Windows.Forms.PaintEventHandler(this.pContenido_Paint);
             // 
             // pizzeriaFDataSet15BindingSource
             // 
@@ -284,24 +294,142 @@
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.panel8.Controls.Add(this.dataGridView1);
+            this.panel8.Controls.Add(this.lblTotal);
+            this.panel8.Controls.Add(this.label6);
+            this.panel8.Controls.Add(this.lblSubtotal);
+            this.panel8.Controls.Add(this.label5);
+            this.panel8.Controls.Add(this.btnAplicar);
+            this.panel8.Controls.Add(this.txtCodigoPromocion);
+            this.panel8.Controls.Add(this.label3);
+            this.panel8.Controls.Add(this.txtNombreCliente);
+            this.panel8.Controls.Add(this.label4);
+            this.panel8.Controls.Add(this.label1);
+            this.panel8.Controls.Add(this.btnPagar);
+            this.panel8.Controls.Add(this.listBoxPedidoFinal);
+            this.panel8.Controls.Add(this.listViewPedidoFinal);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel8.Location = new System.Drawing.Point(229, 600);
+            this.panel8.Location = new System.Drawing.Point(229, 473);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(930, 197);
+            this.panel8.Size = new System.Drawing.Size(930, 324);
             this.panel8.TabIndex = 3;
             // 
-            // dataGridView1
+            // lblTotal
             // 
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.DataSource = this.pizzeriaFDataSet15BindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(50, 24);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 62;
-            this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.Size = new System.Drawing.Size(855, 140);
-            this.dataGridView1.TabIndex = 0;
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Location = new System.Drawing.Point(102, 292);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(62, 20);
+            this.lblTotal.TabIndex = 56;
+            this.lblTotal.Text = "$ 00.00";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(38, 292);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(48, 20);
+            this.label6.TabIndex = 55;
+            this.label6.Text = "Total:";
+            // 
+            // lblSubtotal
+            // 
+            this.lblSubtotal.AutoSize = true;
+            this.lblSubtotal.Location = new System.Drawing.Point(126, 264);
+            this.lblSubtotal.Name = "lblSubtotal";
+            this.lblSubtotal.Size = new System.Drawing.Size(62, 20);
+            this.lblSubtotal.TabIndex = 54;
+            this.lblSubtotal.Text = "$ 00.00";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(38, 264);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(73, 20);
+            this.label5.TabIndex = 53;
+            this.label5.Text = "Subtotal:";
+            // 
+            // btnAplicar
+            // 
+            this.btnAplicar.Location = new System.Drawing.Point(822, 71);
+            this.btnAplicar.Name = "btnAplicar";
+            this.btnAplicar.Size = new System.Drawing.Size(69, 27);
+            this.btnAplicar.TabIndex = 52;
+            this.btnAplicar.Text = "Aplicar";
+            this.btnAplicar.UseVisualStyleBackColor = true;
+            this.btnAplicar.Click += new System.EventHandler(this.btnAplicar_Click);
+            // 
+            // txtCodigoPromocion
+            // 
+            this.txtCodigoPromocion.Location = new System.Drawing.Point(600, 71);
+            this.txtCodigoPromocion.Name = "txtCodigoPromocion";
+            this.txtCodigoPromocion.Size = new System.Drawing.Size(195, 26);
+            this.txtCodigoPromocion.TabIndex = 51;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(321, 71);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(273, 28);
+            this.label3.TabIndex = 50;
+            this.label3.Text = "Código de descuento:";
+            // 
+            // txtNombreCliente
+            // 
+            this.txtNombreCliente.Location = new System.Drawing.Point(117, 71);
+            this.txtNombreCliente.Name = "txtNombreCliente";
+            this.txtNombreCliente.Size = new System.Drawing.Size(180, 26);
+            this.txtNombreCliente.TabIndex = 49;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(10, 69);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(101, 28);
+            this.label4.TabIndex = 48;
+            this.label4.Text = "Cliente:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(284, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(310, 38);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Detalles de pedido";
+            // 
+            // btnPagar
+            // 
+            this.btnPagar.Location = new System.Drawing.Point(434, 264);
+            this.btnPagar.Name = "btnPagar";
+            this.btnPagar.Size = new System.Drawing.Size(75, 42);
+            this.btnPagar.TabIndex = 2;
+            this.btnPagar.Text = "Pagar";
+            this.btnPagar.UseVisualStyleBackColor = true;
+            this.btnPagar.Click += new System.EventHandler(this.btnPagar_Click);
+            // 
+            // listBoxPedidoFinal
+            // 
+            this.listBoxPedidoFinal.FormattingEnabled = true;
+            this.listBoxPedidoFinal.ItemHeight = 20;
+            this.listBoxPedidoFinal.Location = new System.Drawing.Point(36, 127);
+            this.listBoxPedidoFinal.Name = "listBoxPedidoFinal";
+            this.listBoxPedidoFinal.Size = new System.Drawing.Size(855, 124);
+            this.listBoxPedidoFinal.TabIndex = 0;
+            // 
+            // listViewPedidoFinal
+            // 
+            this.listViewPedidoFinal.HideSelection = false;
+            this.listViewPedidoFinal.Location = new System.Drawing.Point(36, 23);
+            this.listViewPedidoFinal.Name = "listViewPedidoFinal";
+            this.listViewPedidoFinal.Size = new System.Drawing.Size(0, 0);
+            this.listViewPedidoFinal.TabIndex = 1;
+            this.listViewPedidoFinal.UseCompatibleStateImageBehavior = false;
             // 
             // frmMenuPrincipal
             // 
@@ -328,7 +456,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pizzeriaFDataSet15BindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pizzeriaFDataSet15)).EndInit();
             this.panel8.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.panel8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -354,8 +482,20 @@
         private System.Windows.Forms.BindingSource pizzeriaFDataSet15BindingSource;
         private PizzeriaFDataSet15 pizzeriaFDataSet15;
         private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.DataGridView dataGridView1;
         public System.Windows.Forms.Button btnAdministrar;
         public System.Windows.Forms.Label lblUser;
+        private System.Windows.Forms.ListView listViewPedidoFinal;
+        private System.Windows.Forms.ListBox listBoxPedidoFinal;
+        private System.Windows.Forms.Button btnPagar;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnAplicar;
+        private System.Windows.Forms.TextBox txtCodigoPromocion;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtNombreCliente;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblSubtotal;
+        private System.Windows.Forms.Label label5;
     }
 }

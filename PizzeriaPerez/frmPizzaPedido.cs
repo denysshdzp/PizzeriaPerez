@@ -1,100 +1,164 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-//Llamar la libreria SQL
 using System.Data.SqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Windows.Forms;
 
 namespace PizzeriaPerez
 {
     public partial class frmPizzaPedido : Form
     {
+        SqlConnection CONEXION = new SqlConnection("Data Source=DESKTOP-8RBGU1S;Initial Catalog=PizzeriaF;Integrated Security=True");
+
         public frmPizzaPedido()
         {
             InitializeComponent();
         }
-        //Conexion con SQL
-        SqlConnection CONEXION = new SqlConnection("Data Source=LAPTOP-PTEQ4GGC;Initial Catalog=PizzeriaF;Integrated Security=True");
 
-        //Metodo para limpiar
-        public void LIMPIAR()
+        public void LimpiarDatos()
         {
             txtCantidadExtra.Clear();
             txtComentarios.Clear();
-
+            txtCantidadPIZZAS.Clear();
         }
 
-        //Llenar la tabla
         public void LLENAR()
         {
-
-            SqlDataAdapter DA = new SqlDataAdapter("SPObtenerDetallesPizza", CONEXION);
-            DataTable DT = new DataTable();
-            DA.Fill(DT);
-            dataGridView1.DataSource = DT;
+            try
+            {
+                SqlDataAdapter DA = new SqlDataAdapter("SPObtenerDetallesPizza", CONEXION);
+                DataTable DT = new DataTable();
+                DA.Fill(DT);
+                dataGridView1.DataSource = DT;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al llenar los datos: " + ex.Message);
+            }
         }
-
 
         private void frmPizzaPedido_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet7.SPObtenerDetallesPizza' Puede moverla o quitarla según sea necesario.
-            this.sPObtenerDetallesPizzaTableAdapter1.Fill(this.pizzeriaFDataSet7.SPObtenerDetallesPizza);
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet6.SPObtenerDetallesPizza' Puede moverla o quitarla según sea necesario.
-            this.sPObtenerDetallesPizzaTableAdapter.Fill(this.pizzeriaFDataSet6.SPObtenerDetallesPizza);
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet3.INGREDIENTEEXTRA' Puede moverla o quitarla según sea necesario.
-            this.iNGREDIENTEEXTRATableAdapter.Fill(this.pizzeriaFDataSet3.INGREDIENTEEXTRA);
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet3.ESPECIALIDAD' Puede moverla o quitarla según sea necesario.
-            this.eSPECIALIDADTableAdapter.Fill(this.pizzeriaFDataSet3.ESPECIALIDAD);
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet3.TAMAÑO' Puede moverla o quitarla según sea necesario.
-            this.tAMAÑOTableAdapter.Fill(this.pizzeriaFDataSet3.TAMAÑO);
+            LLENAR();
+            CargarComboBoxes();
+        }
 
+        private void CargarComboBoxes()
+        {
+            try
+            {
+                SqlDataAdapter tamAdapter = new SqlDataAdapter("SELECT * FROM TAMAÑO", CONEXION);
+                DataTable tamDataTable = new DataTable();
+                tamAdapter.Fill(tamDataTable);
+                cbTam.DataSource = tamDataTable;
+                cbTam.DisplayMember = "NombreTamaño";
+                cbTam.ValueMember = "idTamaño";
+
+                SqlDataAdapter espAdapter = new SqlDataAdapter("SELECT * FROM ESPECIALIDAD", CONEXION);
+                DataTable espDataTable = new DataTable();
+                espAdapter.Fill(espDataTable);
+                cbEspe.DataSource = espDataTable;
+                cbEspe.DisplayMember = "NombreEspecialidad";
+                cbEspe.ValueMember = "idEspecialidad";
+
+                SqlDataAdapter ingAdapter = new SqlDataAdapter("SELECT * FROM INGREDIENTEEXTRA", CONEXION);
+                DataTable ingDataTable = new DataTable();
+                ingAdapter.Fill(ingDataTable);
+                cbExtra.DataSource = ingDataTable;
+                cbExtra.DisplayMember = "NombreIngrediente";
+                cbExtra.ValueMember = "idIngredienteExtra";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los ComboBoxes: " + ex.Message);
+            }
+        }
+
+        private decimal CalcularPrecioTotal(int idTamaño, int idEspecialidad, int idIngredienteExtra)
+        {
+            decimal precioTotal = 0;
+
+            SqlCommand obtenerPrecioTamaño = new SqlCommand("SELECT Precio FROM TAMAÑO WHERE idTamaño = @idTamaño", CONEXION);
+            obtenerPrecioTamaño.Parameters.AddWithValue("@idTamaño", idTamaño);
+            decimal precioTamaño = Convert.ToDecimal(obtenerPrecioTamaño.ExecuteScalar());
+            precioTotal += precioTamaño;
+
+            SqlCommand obtenerCostoEspecialidad = new SqlCommand("SELECT CostoExtra FROM ESPECIALIDAD WHERE idEspecialidad = @idEspecialidad", CONEXION);
+            obtenerCostoEspecialidad.Parameters.AddWithValue("@idEspecialidad", idEspecialidad);
+            decimal costoEspecialidad = Convert.ToDecimal(obtenerCostoEspecialidad.ExecuteScalar());
+            precioTotal += costoEspecialidad;
+
+            if (idIngredienteExtra != 0)
+            {
+                SqlCommand obtenerPrecioIngredienteExtra = new SqlCommand("SELECT PrecioIngrediente FROM INGREDIENTEEXTRA WHERE idIngredienteExtra = @idIngredienteExtra", CONEXION);
+                obtenerPrecioIngredienteExtra.Parameters.AddWithValue("@idIngredienteExtra", idIngredienteExtra);
+                decimal precioIngredienteExtra = Convert.ToDecimal(obtenerPrecioIngredienteExtra.ExecuteScalar());
+                precioTotal += precioIngredienteExtra;
+            }
+
+            int cantidadPizzas = Convert.ToInt32(txtCantidadPIZZAS.Text);
+            precioTotal *= cantidadPizzas;
+
+            return precioTotal;
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            CONEXION.Open();
-            SqlCommand ALTAS = new SqlCommand("insert into PIZZA(idTamaño,idEspecialidad,Comentarios,CantidadPizzas,idIngredienteExtra,CantidadExtra)" +
-               "values (@idTamaño,@idEspecialidad,@Comentarios,@CantidadPizzas,@idIngredienteExtra,@CantidadExtra)", CONEXION);
-
-            // Obtener el ID del tamaño seleccionado
-            int idTamañoSeleccionado = (int)cbTam.SelectedValue;
-
-            // Obtener el ID de la especialidad seleccionada
-            int idEspecialidadSeleccionada = (int)cbEspe.SelectedValue;
-
-            // Obtener el ID del ingrediente extra seleccionado
-            int idIngredienteExtraSeleccionado = (int)cbExtra.SelectedValue;
-
-            // Luego puedes utilizar estos IDs en lugar de los valores de los ComboBoxes en tus parámetros SQL
-            ALTAS.Parameters.AddWithValue("idTamaño", idTamañoSeleccionado);
-            ALTAS.Parameters.AddWithValue("idEspecialidad", idEspecialidadSeleccionada);
-            ALTAS.Parameters.AddWithValue("Comentarios", txtComentarios.Text);
-            ALTAS.Parameters.AddWithValue("CantidadPizzas", txtCantidadPIZZAS.Text);
-            ALTAS.Parameters.AddWithValue("idIngredienteExtra", idIngredienteExtraSeleccionado);
-            ALTAS.Parameters.AddWithValue("CantidadExtra", txtCantidadExtra.Text);
-
-
             try
             {
+                CONEXION.Open();
+
+                // Verificar si las cadenas pueden convertirse a enteros
+                if (!int.TryParse(txtCantidadPIZZAS.Text, out int cantidadPizzas))
+                {
+                    MessageBox.Show("Cantidad de pizzas no válida.");
+                    return;
+                }
+
+                // Obtener los valores seleccionados de los ComboBoxes
+                int idTamañoSeleccionado = (int)cbTam.SelectedValue;
+                int idEspecialidadSeleccionada = (int)cbEspe.SelectedValue;
+                int idIngredienteExtraSeleccionado = (int)cbExtra.SelectedValue;
+
+                // Insertar en la tabla PIZZA
+                SqlCommand ALTAS = new SqlCommand("INSERT INTO PIZZA (idTamaño, idEspecialidad, Comentarios, CantidadPizzas, idIngredienteExtra, CantidadExtra) " +
+                                                   "VALUES (@idTamaño, @idEspecialidad, @Comentarios, @CantidadPizzas, @idIngredienteExtra, @CantidadExtra)", CONEXION);
+
+                ALTAS.Parameters.AddWithValue("@idTamaño", idTamañoSeleccionado);
+                ALTAS.Parameters.AddWithValue("@idEspecialidad", idEspecialidadSeleccionada);
+                ALTAS.Parameters.AddWithValue("@Comentarios", txtComentarios.Text);
+                ALTAS.Parameters.AddWithValue("@CantidadPizzas", cantidadPizzas);
+                ALTAS.Parameters.AddWithValue("@idIngredienteExtra", idIngredienteExtraSeleccionado);
+                ALTAS.Parameters.AddWithValue("@CantidadExtra", txtCantidadExtra.Text);
 
                 ALTAS.ExecuteNonQuery();
-                LLENAR();
+
                 MessageBox.Show("PIZZA AGREGADA AL PEDIDO");
-                LIMPIAR();
+                LimpiarDatos();
+                LLENAR();
 
+                // Llamar al procedimiento almacenado para llenar la tabla PEDIDO_FINAL
+                SqlCommand llenarPedidoFinal = new SqlCommand("SP_LLENAR_PEDIDO_FINAL", CONEXION);
+                llenarPedidoFinal.CommandType = CommandType.StoredProcedure;
+                llenarPedidoFinal.ExecuteNonQuery();
+
+                MessageBox.Show("Pedido Final actualizado.");
+
+                if (Application.OpenForms["frmMenuPrincipal"] is frmMenuPrincipal menuPrincipal)
+                {
+                    menuPrincipal.CargarDatosPedidoFinal();
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("ERROR DE REGISTRO");
+                MessageBox.Show("ERROR DE REGISTRO: " + ex.Message);
             }
-            CONEXION.Close();
-
+            finally
+            {
+                CONEXION.Close();
+            }
         }
+
+
     }
 }
+

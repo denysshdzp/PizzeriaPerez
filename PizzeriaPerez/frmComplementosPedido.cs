@@ -1,83 +1,103 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-//Llamar la libreria SQL
 using System.Data.SqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Windows.Forms;
 
 namespace PizzeriaPerez
 {
     public partial class frmComplementosPedido : Form
     {
+        // Cambia la cadena de conexión según tu configuración
+        SqlConnection CONEXION = new SqlConnection("Data Source=DESKTOP-8RBGU1S;Initial Catalog=PizzeriaF;Integrated Security=True");
+
         public frmComplementosPedido()
         {
             InitializeComponent();
         }
-        //Conexion con SQL
-        SqlConnection CONEXION = new SqlConnection("Data Source=LAPTOP-PTEQ4GGC;Initial Catalog=PizzeriaF;Integrated Security=True");
 
-        //Metodo para limpiar
         public void LIMPIAR()
         {
             txtCantidadComple.Clear();
             txtComentarios.Clear();
-
         }
 
-        //Llenar la tabla
         public void LLENAR()
         {
-
-            SqlDataAdapter DA = new SqlDataAdapter("SPObtenerDetallesComplementoPedido", CONEXION);
-            DataTable DT = new DataTable();
-            DA.Fill(DT);
-            dataGridView1.DataSource = DT;
-        }
-        private void btnAgregar_Click(object sender, EventArgs e)
-        {
-
-            CONEXION.Open();
-            SqlCommand ALTAS = new SqlCommand("insert into COMPLEMENTOPEDIDO(idComplementos,Comentarios,Cantidad)" +
-               "values (@idComplementos,@Comentarios,@Cantidad)", CONEXION);
-
-            // Obtener el ID 
-            int idComplementos = (int)cbComplemento.SelectedValue;
-
-            // Luego puedes utilizar estos IDs en lugar de los valores de los ComboBoxes en tus parámetros SQL
-            ALTAS.Parameters.AddWithValue("idComplementos", idComplementos);
-            ALTAS.Parameters.AddWithValue("Comentarios", txtComentarios.Text);
-            ALTAS.Parameters.AddWithValue("Cantidad", txtCantidadComple.Text);
-
-
             try
             {
+                SqlDataAdapter DA = new SqlDataAdapter("SPObtenerDetallesComplementoPedido", CONEXION);
+                DataTable DT = new DataTable();
+                DA.Fill(DT);
+                dataGridView1.DataSource = DT;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los datos: " + ex.Message);
+            }
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CONEXION.Open();
+
+                SqlCommand ALTAS = new SqlCommand("insert into COMPLEMENTOPEDIDO(idComplementos, Comentarios, Cantidad) values (@idComplementos, @Comentarios, @Cantidad)", CONEXION);
+
+                // Obtener el ID
+                int idComplementos = (int)cbComplemento.SelectedValue;
+
+                ALTAS.Parameters.AddWithValue("@idComplementos", idComplementos);
+                ALTAS.Parameters.AddWithValue("@Comentarios", txtComentarios.Text);
+                ALTAS.Parameters.AddWithValue("@Cantidad", txtCantidadComple.Text);
 
                 ALTAS.ExecuteNonQuery();
                 LLENAR();
                 MessageBox.Show("COMPLEMENTO AGREGADO AL PEDIDO");
                 LIMPIAR();
 
+                // Llamar al procedimiento almacenado para llenar la tabla PEDIDO_FINAL
+                SqlCommand llenarPedidoFinal = new SqlCommand("SP_LLENAR_PEDIDO_FINAL", CONEXION);
+                llenarPedidoFinal.CommandType = CommandType.StoredProcedure;
+                llenarPedidoFinal.ExecuteNonQuery();
+
+                MessageBox.Show("Pedido Final actualizado.");
+
+                if (Application.OpenForms["frmMenuPrincipal"] is frmMenuPrincipal menuPrincipal)
+                {
+                    menuPrincipal.CargarDatosPedidoFinal();
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("ERROR DE REGISTRO");
+                MessageBox.Show("Error al agregar el complemento: " + ex.Message);
             }
-            CONEXION.Close();
+            finally
+            {
+                CONEXION.Close();
+            }
         }
 
         private void frmComplementosPedido_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet3.COMPLEMENTOS' Puede moverla o quitarla según sea necesario.
-            this.cOMPLEMENTOSTableAdapter.Fill(this.pizzeriaFDataSet3.COMPLEMENTOS);
-            // TODO: esta línea de código carga datos en la tabla 'pizzeriaFDataSet12.SPObtenerDetallesComplementoPedido' Puede moverla o quitarla según sea necesario.
-            this.sPObtenerDetallesComplementoPedidoTableAdapter.Fill(this.pizzeriaFDataSet12.SPObtenerDetallesComplementoPedido);
+            try
+            {
+                // Llenar el ComboBox con los datos de la tabla COMPLEMENTOS
+                SqlDataAdapter adapter = new SqlDataAdapter("SELECT idComplementos, NombreComplementos FROM COMPLEMENTOS", CONEXION);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
 
+                cbComplemento.DisplayMember = "NombreComplementos";
+                cbComplemento.ValueMember = "idComplementos";
+                cbComplemento.DataSource = dt;
+
+                // Cargar los datos en el DataGridView
+                LLENAR();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los ComboBoxes: " + ex.Message);
+            }
         }
     }
 }
